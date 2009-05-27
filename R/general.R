@@ -11,7 +11,7 @@ anynames <- function(data)
 {
   if (is.null(names(data))) colnames(data) <- value
   else names(data) <- value
-  invisible()
+  invisible(data)
 }
 
 # Gets the length of a vector or the rows of a matrix or data frame.
@@ -21,6 +21,16 @@ anylength <- function(data)
   if (is.null(len)) { len <- length(data) }
   len
 }
+
+# Lists out the types of a data.frame or other object that supports anynames
+anytypes <- function(data, fun=class)
+{
+  ts <- apply(matrix(anynames(data), ncol=1), 1, function(x) fun(data[,x]))
+  names(ts) <- anynames(data)
+
+  return(ts)
+}
+
 
 # Similar to rollapply but the values are inline, such that the next iteration
 # can act on the newly minted values
@@ -105,7 +115,14 @@ mid <- function(x)
 # Return a portion of a matrix. This is useful for debugging.
 peek <- function(x, upper=5, lower=1)
 {
-  if (is.null(dim(x))) return(x[lower:upper])
-  return(x[lower:upper,lower:upper])
+  if (is.null(dim(x)))
+  {
+    my.upper <- min(upper, anylength(x))
+    return(x[lower:my.upper])
+  }
+
+  upper.row <- min(upper, anylength(x))
+  upper.col <- min(upper, ncol(x))
+  return(x[lower:upper.row,lower:upper.col])
 }
 
