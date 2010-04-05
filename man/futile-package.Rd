@@ -3,40 +3,33 @@
 \alias{futile}
 \docType{package}
 \title{
-  A lightweight package of function utilities
+  The base package for the futile suite of libraries
 }
 \description{
-  This package is a collection of functions to expedite development in R and
-  provide a few conveniences. The main highlights are the any* functions that
-  attempt to consolidate attribute access of lists, vectors, matrices, arrays,
-  and other data structures. In addition to these functions, there are functions
-  related to logic and time series plus debugging interfaces to ease 
-  development.
+  This package is a grouping package with minimal functionality. Loading this
+  package ensures that all stable futile packages are loaded into the local R
+  installation.
 }
 \details{
 \tabular{ll}{
 Package: \tab futile\cr
 Type: \tab Package\cr
-Version: \tab 1.1.1\cr
-Date: \tab 2009-07-16\cr
-License: \tab GPL-2\cr
+Version: \tab 2.0.0\cr
+Date: \tab 2010-04-05\cr
+License: \tab LGPL-3\cr
 LazyLoad: \tab yes\cr
 }
-  The anylength and anynames functions consolidate attribute access across many
-  data structures providing a bit of convenience via polymorphism. The anytypes
-  function provides the classes or types of a data.frame-like object. This is
-  useful when parsing data and it is not always clear how values will be 
-  parsed.
+  Current sub-systems avaiable in futile include
 
-  Peek falls into the same lineage as head and tail but supports easy-to-read
-  views for 2-dimensional data structures. The biggest failing of head an tail
-  (to me) is that these functions are only readable when a small number of 
-  columns exist. In matrices with many colulmns, the output is difficult to
-  read. Peek solves this problem.
+  1. futile.options - A scoped options management library
 
-  The logLevel and usePlots provide global control over logging and plotting
-  across an application. Note that logLevel is now obsolete and has been
-  replaced by the futile logging subsystem.
+  2. futile.logger - A feature rich logging library similar to log4j and log4cpp
+
+  3. futile.any - A library that provides some extra polymorphism for common
+  functions
+
+  4. futile.matrix - A matrix manipulation library that eases working with
+  large matrices
 }
 \author{
 Brian Lee Yung Rowe <r@nurometic.com>
@@ -44,26 +37,4 @@ Brian Lee Yung Rowe <r@nurometic.com>
 \keyword{ package }
 \keyword{ attribute }
 \keyword{ logic }
-\seealso{ \code{\link{inlineapply}}, \code{\link{anylength}}, \code{\link{anylength}}, \code{\link{peek}}, \code{\link{negate}}, \code{\link{mid}}, \code{\link{logger.options}}, \code{\link{options.manager}} }
-\examples{
-  inlineapply(c(1,1,2,3,5), 2, sum)
-  inlineapply(c(1,2,1,3,4), 2, min)
-
-  m <- matrix(c(1,2,3,4,5,6), ncol=2)
-  anylength(m)
-
-  v <- c(1,2,3,4,5)
-  anylength(v)
-
-  m <- matrix(c(1,2,3,4,5,6), ncol=2)
-  anynames(m) <- c('d','e')
-  anynames(m)
-
-  v <- c(a=1,b=2,c=3,d=4,e=5)
-  anynames(v)
-
-  l <- list(a=1,b=2,c=3,d=4,e=5)
-  anynames(l)
-
-  peek(matrix(rnorm(225), ncol=15))
-}
+\seealso{ \code{futile.options}, \code{futile.logger}, \code{futile.any}, \code{futile.matrix} }
